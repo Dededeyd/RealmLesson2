@@ -43,7 +43,6 @@ class OwnerViewModel : ViewModel() {
         }
     }
 
-    // --- MODIFIED HERE: Added 'petBreed' parameter ---
     fun addOwnerWithPet(ownerName: String, ownerAge: Int, petName: String, petType: String, petBreed: String, petAge: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val realm = RealmHelper.getRealmInstance()
@@ -51,7 +50,7 @@ class OwnerViewModel : ViewModel() {
                 val newPet = PetModel().apply {
                     this.name = petName
                     this.petType = petType
-                    this.breed = petBreed // <-- THIS IS THE FIX
+                    this.breed = petBreed
                     this.age = petAge
                 }
                 copyToRealm(OwnerModel().apply {
@@ -63,36 +62,30 @@ class OwnerViewModel : ViewModel() {
         }
     }
 
-    // Delete owner and all their pets (cascade delete)
     fun deleteOwnerAndPets(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val realm = RealmHelper.getRealmInstance()
             realm.write {
                 val owner = query(OwnerModel::class, "id == $0", id).first().find()
                 owner?.let {
-                    // Create a list copy to avoid concurrent modification
                     val petsToDelete = it.pets.toList()
                     // Delete all pets
                     petsToDelete.forEach { pet ->
                         delete(pet)
                     }
-                    // Then delete owner
                     delete(it)
                 }
             }
         }
     }
 
-    // Delete owner only, keep pets available for adoption
     fun deleteOwnerOnly(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val realm = RealmHelper.getRealmInstance()
             realm.write {
                 val owner = query(OwnerModel::class, "id == $0", id).first().find()
                 owner?.let {
-                    // Clear the pets list (makes them available for adoption)
-                    it.pets.clear()
-                    // Then delete owner
+\                    it.pets.clear()
                     delete(it)
                 }
             }
