@@ -9,7 +9,7 @@ class PetModel : RealmObject {
     var id: String = UUID.randomUUID().toString()
     var name: String = ""
     var petType: String = ""
-    var breed: String = "" // <-- THIS IS THE FIX
+    var breed: String = "" 
     var age: Int = 0
 
 }
