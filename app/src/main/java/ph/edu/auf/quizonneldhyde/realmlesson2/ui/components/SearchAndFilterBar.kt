@@ -58,14 +58,12 @@ fun SearchAndFilterBar(
 ) {
     var showSortMenu by remember { mutableStateOf(false) }
 
-    // --- REMOVED THE CARD. We'll place items directly on the screen bg ---
     Row(
         modifier = modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // --- 1. SEARCH FIELD (More themed) ---
         OutlinedTextField(
             value = searchQuery,
             onValueChange = onSearchChange,
@@ -80,7 +78,7 @@ fun SearchAndFilterBar(
                 Icon(
                     Icons.Default.Search,
                     contentDescription = "Search",
-                    tint = MaterialTheme.colorScheme.primary // Purple icon
+                    tint = MaterialTheme.colorScheme.primary 
                 )
             },
             trailingIcon = {
@@ -97,7 +95,6 @@ fun SearchAndFilterBar(
             singleLine = true,
             shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                // Use theme colors for a purple-ish background
                 focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                 unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
                 focusedBorderColor = MaterialTheme.colorScheme.primary, // Purple border
@@ -105,12 +102,10 @@ fun SearchAndFilterBar(
             )
         )
 
-        // --- 2. SORT BUTTON (Changed to FilledTonalButton) ---
         Box {
-            // This button is designed to be themed!
             FilledTonalButton(
                 onClick = { showSortMenu = true },
-                modifier = Modifier.size(56.dp), // Standard height
+                modifier = Modifier.size(56.dp), 
                 shape = RoundedCornerShape(16.dp),
                 contentPadding = PaddingValues(0.dp)
             ) {
@@ -120,7 +115,6 @@ fun SearchAndFilterBar(
                 )
             }
 
-            // --- 3. DROPDOWN MENU (More polished) ---
             DropdownMenu(
                 expanded = showSortMenu,
                 onDismissRequest = { showSortMenu = false },
