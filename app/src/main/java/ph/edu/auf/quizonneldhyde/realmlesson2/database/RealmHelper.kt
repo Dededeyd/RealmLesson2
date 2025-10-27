@@ -12,7 +12,7 @@ object RealmHelper {
     fun initializeRealm() {
         val config = RealmConfiguration.Builder(schema = setOf(PetModel::class, OwnerModel::class))
             .name("petrealm.realm")
-            .schemaVersion(2) // Increment version for breed field
+            .schemaVersion(2) 
             .deleteRealmIfMigrationNeeded()
             .initialData {
                 copyToRealm(PetModel().apply {
