@@ -3,8 +3,8 @@ package ph.edu.auf.quizonneldhyde.realmlesson2.ui.components
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow // <-- IMPORT LazyRow
-import androidx.compose.foundation.lazy.items // <-- IMPORT items
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -19,13 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// --- Define the aesthetic colors ---
 val StatPurple = Color(0xFFEFE6FD)
 val StatPink = Color(0xFFFCE7F3)
 val StatPurple2 = Color(0xFFF5F3FF)
 val StatGreen = Color(0xFFECFDF5)
 
-// --- Data class to help organize the list ---
 private data class StatInfo(
     val icon: ImageVector,
     val value: Int,
@@ -42,7 +40,6 @@ fun StatsDashboard(
     ownersWithPets: Int,
     modifier: Modifier = Modifier
 ) {
-    // --- Create a list of stats ---
     val statsList = listOf(
         StatInfo(Icons.Default.Pets, totalPets, "Total Pets", StatPurple, Color(0xFF7C3AED)),
         StatInfo(Icons.Default.Favorite, petsWithOwners, "Adopted", StatPink, Color(0xFFDB2777)),
@@ -62,13 +59,12 @@ fun StatsDashboard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 24.dp) // Only vertical padding on the column
+                .padding(vertical = 24.dp) 
         ) {
-            // --- HEADER ROW ---
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp), // Horizontal padding here
+                    .padding(horizontal = 20.dp), 
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -87,11 +83,8 @@ fun StatsDashboard(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // --- THIS IS THE FIX: Reverted to LazyRow ---
             LazyRow(
-                // Add padding on the start/end of the list
                 contentPadding = PaddingValues(horizontal = 20.dp),
-                // Space between each card
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(statsList) { stat ->
@@ -101,12 +94,10 @@ fun StatsDashboard(
                         label = stat.label,
                         backgroundColor = stat.backgroundColor,
                         iconColor = stat.iconColor,
-                        // Set a fixed width for each card so they look good scrolling
                         modifier = Modifier.width(140.dp)
                     )
                 }
             }
-            // --- END OF FIX ---
         }
     }
 }
@@ -132,7 +123,6 @@ private fun AnimatedStatCard(
     }
 
     Box(
-        // Use the modifier passed in (which sets the width)
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
             .background(backgroundColor)
