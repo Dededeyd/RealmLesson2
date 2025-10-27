@@ -6,8 +6,10 @@ import java.util.UUID
 
 class PetModel : RealmObject {
     @PrimaryKey
-    var id : String = UUID.randomUUID().toString()
-    var name : String = ""
-    var petType : String = ""
-    var age : Int = 0
+    var id: String = UUID.randomUUID().toString()
+    var name: String = ""
+    var petType: String = ""
+    var breed: String = "" // <-- THIS IS THE FIX
+    var age: Int = 0
+
 }
