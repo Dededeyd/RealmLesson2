@@ -23,7 +23,7 @@ import ph.edu.auf.quizonneldhyde.realmlesson2.database.realmmodel.OwnerModel
 import ph.edu.auf.quizonneldhyde.realmlesson2.ui.components.DeleteConfirmationDialog
 import ph.edu.auf.quizonneldhyde.realmlesson2.ui.components.SearchAndFilterBar
 import ph.edu.auf.quizonneldhyde.realmlesson2.ui.components.SortOption
-import ph.edu.auf.quizonneldhyde.realmlesson2.models.PetType // <-- Make sure this is imported
+import ph.edu.auf.quizonneldhyde.realmlesson2.models.PetType 
 import ph.edu.auf.quizonneldhyde.realmlesson2.viewmodels.OwnerViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +35,6 @@ fun OwnerScreen(ownerViewModel: OwnerViewModel = viewModel()) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedSort by remember { mutableStateOf(SortOption.NAME_ASC) }
 
-    // Filter and sort owners
     val filteredAndSortedOwners = remember(owners, searchQuery, selectedSort) {
         owners.filter {
             it.name.contains(searchQuery, ignoreCase = true)
@@ -90,7 +89,6 @@ fun OwnerScreen(ownerViewModel: OwnerViewModel = viewModel()) {
                 .padding(padding)
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            // Use the shared component
             SearchAndFilterBar(
                 searchQuery = searchQuery,
                 onSearchChange = { searchQuery = it },
@@ -125,7 +123,6 @@ fun OwnerScreen(ownerViewModel: OwnerViewModel = viewModel()) {
         }
     }
 
-    // Delete Confirmation Dialog
     ownerToDelete?.let { owner ->
         val hasPets = owner.pets.isNotEmpty()
         DeleteConfirmationDialog(
@@ -358,7 +355,6 @@ fun AddOwnerDialog(
     var ownerName by remember { mutableStateOf("") }
     var ownerAge by remember { mutableStateOf("") }
     var petName by remember { mutableStateOf("") }
-    // --- FIX: Changed from String to PetType? ---
     var selectedPetType by remember { mutableStateOf<PetType?>(null) }
     var petBreed by remember { mutableStateOf("") }
     var petAge by remember { mutableStateOf("") }
@@ -489,7 +485,6 @@ fun AddOwnerDialog(
                         )
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // --- FIX: Replaced TextField with Dropdown ---
                         var expanded by remember { mutableStateOf(false) }
                         ExposedDropdownMenuBox(
                             expanded = expanded,
@@ -520,7 +515,6 @@ fun AddOwnerDialog(
                                 }
                             }
                         }
-                        // --- END OF FIX ---
 
                         Spacer(modifier = Modifier.height(12.dp))
                         OutlinedTextField(
@@ -546,7 +540,6 @@ fun AddOwnerDialog(
             if (selectedMode != OwnerAddMode.SelectMode) {
                 Button(
                     onClick = {
-                        // --- FIX: Get name from selectedPetType ---
                         val petTypeName = selectedPetType?.displayName ?: ""
                         when (selectedMode) {
                             OwnerAddMode.OwnerOnly -> {
@@ -562,7 +555,7 @@ fun AddOwnerDialog(
                                         ownerName,
                                         ownerAge.toInt(),
                                         petName,
-                                        petTypeName, // Use the display name
+                                        petTypeName, 
                                         petBreed,
                                         petAge.toInt()
                                     )
@@ -571,7 +564,7 @@ fun AddOwnerDialog(
                             else -> {}
                         }
                     },
-                    // --- FIX: Update validation logic ---
+               
                     enabled = when (selectedMode) {
                         OwnerAddMode.OwnerOnly -> ownerName.isNotBlank() && ownerAge.toIntOrNull() != null
                         OwnerAddMode.OwnerWithPet -> ownerName.isNotBlank() && ownerAge.toIntOrNull() != null &&
