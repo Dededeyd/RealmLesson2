@@ -44,7 +44,6 @@ class PetViewModel : ViewModel() {
         }
     }
 
-    // --- MODIFIED HERE: Added 'breed' parameter ---
     fun addPet(name: String, type: String, breed: String, age: Int, ownerId: String? = null) {
         if (!validatePetInput(name, type, age)) return
 
@@ -55,7 +54,7 @@ class PetViewModel : ViewModel() {
                     val newPet = copyToRealm(PetModel().apply {
                         this.name = name.trim()
                         this.petType = type.trim()
-                        this.breed = breed.trim() // <-- THIS IS THE FIX
+                        this.breed = breed.trim()
                         this.age = age
                     })
                     if (ownerId != null) {
@@ -69,7 +68,6 @@ class PetViewModel : ViewModel() {
         }
     }
 
-    // --- MODIFIED HERE: Added 'petBreed' parameter ---
     fun addPetWithNewOwner(petName: String, petType: String, petBreed: String, petAge: Int, ownerName: String, ownerAge: Int) {
         if (!validatePetInput(petName, petType, petAge) || !validateOwnerInput(ownerName, ownerAge)) return
 
@@ -80,7 +78,7 @@ class PetViewModel : ViewModel() {
                     val newPet = PetModel().apply {
                         this.name = petName.trim()
                         this.petType = petType.trim()
-                        this.breed = petBreed.trim() // <-- THIS IS THE FIX
+                        this.breed = petBreed.trim() 
                         this.age = petAge
                     }
                     copyToRealm(OwnerModel().apply {
