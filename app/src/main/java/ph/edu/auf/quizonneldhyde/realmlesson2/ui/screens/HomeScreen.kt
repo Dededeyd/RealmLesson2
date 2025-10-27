@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward // <-- ADD THIS IMPORT
+import androidx.compose.material.icons.automirrored.filled.ArrowForward 
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
@@ -59,7 +59,6 @@ fun HomeScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(24.dp)
         ) {
-            // Animated Logo Card
             var logoScale by remember { mutableFloatStateOf(0.8f) }
             LaunchedEffect(Unit) {
                 logoScale = 1f
@@ -84,7 +83,6 @@ fun HomeScreen(navController: NavController) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        // Animated Icon
                         val iconRotation by infiniteTransition.animateFloat(
                             initialValue = -10f,
                             targetValue = 10f,
@@ -132,7 +130,6 @@ fun HomeScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Navigation Cards
             ModernNavigationCard(
                 title = "Pet List",
                 subtitle = "View and manage all your pets",
@@ -229,13 +226,11 @@ fun ModernNavigationCard(
                     color = gradient[0].copy(alpha = 0.1f)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
-                        // --- THIS IS THE FIX ---
-                        // Replaced Text("→") with an Icon
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = "Go to $title", // Better for accessibility
+                            contentDescription = "Go to $title",
                             tint = gradient[0],
-                            modifier = Modifier.size(24.dp) // You can adjust this size
+                            modifier = Modifier.size(24.dp) 
                         )
                     }
                 }
