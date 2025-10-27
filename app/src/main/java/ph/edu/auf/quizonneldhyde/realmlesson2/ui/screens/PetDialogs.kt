@@ -79,7 +79,6 @@ fun AddPetDialog(
                     PetAddMode.PetOnly,
                     PetAddMode.PetWithExistingOwner,
                     PetAddMode.PetWithNewOwner -> {
-                        // Pet Details Section (Common to all add modes)
                         PetDetailsFields(
                             petName = petName,
                             onPetNameChange = { petName = it },
@@ -91,7 +90,6 @@ fun AddPetDialog(
                             onPetAgeChange = { petAge = it }
                         )
 
-                        // Owner Selection/Details (Specific to mode)
                         when (selectedMode) {
                             PetAddMode.PetWithExistingOwner -> {
                                 Spacer(modifier = Modifier.height(20.dp))
@@ -201,7 +199,6 @@ private fun PetDetailsFields(
     )
     Spacer(modifier = Modifier.height(12.dp))
 
-    // Pet Type Dropdown
     var expanded by remember { mutableStateOf(false) }
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -306,7 +303,6 @@ private fun validatePetAddInput(
     }
 }
 
-// --- Adopt Pet Dialog ---
 
 @Composable
 fun AdoptPetDialog(
