@@ -64,7 +64,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun RealmLesson2Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false, // Set to false to use custom purple theme
+    dynamicColor: Boolean = false, 
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
