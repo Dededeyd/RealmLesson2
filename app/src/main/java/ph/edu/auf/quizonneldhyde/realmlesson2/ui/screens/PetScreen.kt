@@ -66,7 +66,6 @@ import ph.edu.auf.quizonneldhyde.realmlesson2.ui.components.SortOption
 import ph.edu.auf.quizonneldhyde.realmlesson2.ui.components.StatsDashboard
 import ph.edu.auf.quizonneldhyde.realmlesson2.viewmodels.OwnerViewModel
 import ph.edu.auf.quizonneldhyde.realmlesson2.viewmodels.PetViewModel
-// --- ADDED DIALOG IMPORTS ---
 import ph.edu.auf.quizonneldhyde.realmlesson2.ui.components.AddPetDialog
 import ph.edu.auf.quizonneldhyde.realmlesson2.ui.components.AdoptPetDialog
 
@@ -91,13 +90,11 @@ fun PetScreen(
     var searchQuery by remember { mutableStateOf("") }
     var selectedSort by remember { mutableStateOf(SortOption.NAME_ASC) }
 
-    // Filter and sort pets
-    // --- MODIFIED HERE: Added 'breed' to filter ---
     val filteredAndSortedPets = remember(pets, searchQuery, selectedSort) {
         pets.filter {
             it.name.contains(searchQuery, ignoreCase = true) ||
                     it.petType.contains(searchQuery, ignoreCase = true) ||
-                    it.breed.contains(searchQuery, ignoreCase = true) // <-- THIS IS THE FIX
+                    it.breed.contains(searchQuery, ignoreCase = true) 
         }.let { filtered ->
             when (selectedSort) {
                 SortOption.NAME_ASC -> filtered.sortedBy { it.name.lowercase() }
@@ -108,7 +105,7 @@ fun PetScreen(
         }
     }
 
-    // Show error messages
+   
     LaunchedEffect(error) {
         error?.let {
             snackbarHostState.showSnackbar(it)
@@ -173,7 +170,6 @@ fun PetScreen(
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                // Stats Dashboard
                 val petsWithOwners = pets.count { pet ->
                     owners.any { owner -> owner.pets.any { it.id == pet.id } }
                 }
@@ -185,7 +181,6 @@ fun PetScreen(
                     modifier = Modifier.padding(16.dp)
                 )
 
-                // Search and Filter
                 SearchAndFilterBar(
                     searchQuery = searchQuery,
                     onSearchChange = { searchQuery = it },
@@ -298,7 +293,6 @@ fun PetScreen(
         }
     }
 
-    // Delete Confirmation Dialog
     petToDelete?.let { pet ->
         DeleteConfirmationDialog(
             title = "Delete Pet?",
@@ -312,20 +306,19 @@ fun PetScreen(
     }
 
     if (showAddDialog) {
-        // --- MODIFIED HERE: Added 'breed' to the lambda functions ---
         AddPetDialog(
             owners = owners,
             onDismiss = { showAddDialog = false },
-            onAddPetOnly = { name, type, breed, age -> // <-- THIS IS THE FIX
-                petViewModel.addPet(name, type, breed, age) // <-- THIS IS THE FIX
+            onAddPetOnly = { name, type, breed, age -> 
+                petViewModel.addPet(name, type, breed, age) 
                 showAddDialog = false
             },
-            onAddPetWithExistingOwner = { name, type, breed, age, ownerId -> // <-- THIS IS THE FIX
-                petViewModel.addPet(name, type, breed, age, ownerId) // <-- THIS IS THE FIX
+            onAddPetWithExistingOwner = { name, type, breed, age, ownerId -> 
+                petViewModel.addPet(name, type, breed, age, ownerId) 
                 showAddDialog = false
             },
-            onAddPetWithNewOwner = { petName, petType, petBreed, petAge, ownerName, ownerAge -> // <-- THIS IS THE FIX
-                petViewModel.addPetWithNewOwner(petName, petType, petBreed, petAge, ownerName, ownerAge) // <-- THIS IS THE FIX
+            onAddPetWithNewOwner = { petName, petType, petBreed, petAge, ownerName, ownerAge -> 
+                petViewModel.addPetWithNewOwner(petName, petType, petBreed, petAge, ownerName, ownerAge) 
                 showAddDialog = false
             }
         )
@@ -382,10 +375,10 @@ fun PetCard(pet: PetModel, owners: List<ph.edu.auf.quizonneldhyde.realmlesson2.d
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // --- MODIFIED HERE: This will now work without crashing ---
+                
                 if (pet.breed.isNotBlank()) {
                     Text(
-                        text = pet.breed, // <-- THIS IS THE FIX
+                        text = pet.breed,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                         fontWeight = FontWeight.Medium
@@ -443,7 +436,7 @@ fun PetCard(pet: PetModel, owners: List<ph.edu.auf.quizonneldhyde.realmlesson2.d
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Pet Type Icon on the right
+            
             Surface(
                 modifier = Modifier.size(72.dp),
                 shape = RoundedCornerShape(18.dp),
@@ -451,7 +444,7 @@ fun PetCard(pet: PetModel, owners: List<ph.edu.auf.quizonneldhyde.realmlesson2.d
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
-                        text = PetType.getEmoji(pet.petType), // <-- THIS IS THE FIX (added PetType.)
+                        text = PetType.getEmoji(pet.petType), 
                         fontSize = 40.sp
                     )
                 }
